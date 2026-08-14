@@ -1,0 +1,39 @@
+<div class="container">
+  <h1>Usuários da Escola</h1>
+
+  <div *ngIf="carregando" class="loading">
+  <div class="spinner"></div>
+  <p>Carregando usuários...</p>
+</div>
+
+  <div *ngIf="erro" class="erro">
+    {{ erro }}
+  </div>
+
+  <table *ngIf="usuarios.length > 0" class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Cargo</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let usuario of usuarios">
+  <td>{{ usuario.id }}</td>
+  <td>{{ usuario.nome }}</td>
+  <td>{{ usuario.email }}</td>
+  <td>{{ usuario.cargo }}</td>
+  <td>
+    <button (click)="deletar(usuario.id)">Deletar</button>
+  </td>
+</tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="usuarios.length === 0 && !carregando" class="vazio">
+    Nenhum usuário encontrado
+  </div>
+</div>

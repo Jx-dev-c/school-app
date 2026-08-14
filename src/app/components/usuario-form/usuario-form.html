@@ -1,0 +1,40 @@
+<div class="form-container">
+  <h2>Criar Novo Usuário</h2>
+
+  <div *ngIf="mensagem" class="mensagem">
+    {{ mensagem }}
+  </div>
+
+  <form (ngSubmit)="enviar()">
+    <div class="form-group">
+      <label>Nome:</label>
+      <input 
+        type="text" 
+        [(ngModel)]="usuario.nome" 
+        name="nome"
+        required>
+    </div>
+
+    <div class="form-group">
+      <label>Email:</label>
+      <input 
+        type="email" 
+        [(ngModel)]="usuario.email" 
+        name="email"
+        required>
+    </div>
+
+    <div class="form-group">
+      <label>Cargo:</label>
+      <input 
+        type="text" 
+        [(ngModel)]="usuario.cargo" 
+        name="cargo"
+        required>
+    </div>
+
+    <button type="submit" [disabled]="enviando">
+      {{ enviando ? 'Enviando...' : 'Criar Usuário' }}
+    </button>
+  </form>
+</div>
