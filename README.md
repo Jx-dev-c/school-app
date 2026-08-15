@@ -21,7 +21,7 @@ Backend do projeto: [SchoolApi](https://github.com/Jx-dev-c/SchoolApi) *(ASP.NET
 
 ## Como executar
 
-Requer a API rodando em `http://localhost:5105`.
+Requer a API rodando em `http://localhost:5105/swagger/`.
 
 ```bash
 npm install
