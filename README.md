@@ -3,7 +3,7 @@
 Frontend em Angular para o sistema de gerenciamento escolar.
 
 Backend do projeto: [SchoolApi](https://github.com/Jx-dev-c/SchoolApi) *(ASP.NET Core)*
-![Sistema de Gerenciamento Escolar](docs/scrs.png)
+![Sistema de Gerenciamento Escolar](docs/screenshot.png)
 
 ## Stack
 
