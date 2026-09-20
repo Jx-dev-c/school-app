@@ -1,0 +1,133 @@
+<header class="cabecalho">
+  <div>
+    <h1>Relatórios</h1>
+    <p class="subtitulo">Desempenho por turma e alunos que precisam de atenção.</p>
+  </div>
+
+  <dl class="resumo">
+    <div>
+      <dt>Média da escola</dt>
+      <dd>{{ mediaDaEscola() === null ? '—' : (mediaDaEscola()! | number: '1.2-2') }}</dd>
+    </div>
+    <div>
+      <dt>Em risco</dt>
+      <dd [class.alerta]="totalEmRisco() > 0">{{ totalEmRisco() }}</dd>
+    </div>
+  </dl>
+</header>
+
+<section class="cartao">
+  <header>
+    <h2>Média por turma</h2>
+    <p>Escala de 0 a 10. Vermelho abaixo de 6,0; amarelo entre 6,0 e 7,0.</p>
+  </header>
+
+  @if (turmas.isLoading()) {
+    <p class="estado" role="status">Carregando…</p>
+  } @else if (turmas.error()) {
+    <p class="estado erro" role="alert">
+      Não consegui carregar os relatórios.
+      <button type="button" (click)="turmas.reload()">Tentar de novo</button>
+    </p>
+  } @else if ((turmas.value() ?? []).length === 0) {
+    <p class="estado">Nenhuma turma com nota lançada ainda.</p>
+  } @else {
+    <div class="grafico">
+      @for (turma of turmas.value(); track turma.turmaId) {
+        <div class="coluna">
+          <span class="valor">{{ turma.mediaGeral === null ? '—' : (turma.mediaGeral | number: '1.1-1') }}</span>
+          <div
+            class="barra"
+            [style.height.%]="altura(turma.mediaGeral)"
+            [style.background]="corDaMedia(turma.mediaGeral)"
+            role="meter"
+            [attr.aria-valuenow]="turma.mediaGeral"
+            aria-valuemin="0"
+            aria-valuemax="10"
+            [attr.aria-label]="'Média de ' + turma.turma"
+          ></div>
+          <span class="nome">{{ turma.turma }}</span>
+        </div>
+      }
+    </div>
+
+    <div class="tabela-caixa">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Turma</th>
+            <th scope="col">Professor</th>
+            <th scope="col">Alunos</th>
+            <th scope="col">Média</th>
+            <th scope="col">Menor</th>
+            <th scope="col">Maior</th>
+            <th scope="col">Frequência</th>
+            <th scope="col">Em risco</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (turma of turmas.value(); track turma.turmaId) {
+            <tr>
+              <td>{{ turma.turma }}</td>
+              <td class="secundario">{{ turma.professor }} · {{ turma.disciplina }}</td>
+              <td class="numero">{{ turma.alunos }}</td>
+              <td class="numero">{{ turma.mediaGeral === null ? '—' : (turma.mediaGeral | number: '1.2-2') }}</td>
+              <td class="numero secundario">{{ turma.menorMedia === null ? '—' : (turma.menorMedia | number: '1.1-1') }}</td>
+              <td class="numero secundario">{{ turma.maiorMedia === null ? '—' : (turma.maiorMedia | number: '1.1-1') }}</td>
+              <td class="numero">
+                {{ turma.frequenciaPercentual === null ? '—' : (turma.frequenciaPercentual | number: '1.1-1') + '%' }}
+              </td>
+              <td class="numero">
+                @if (turma.alunosEmRisco > 0) {
+                  <span class="etiqueta">{{ turma.alunosEmRisco }}</span>
+                } @else {
+                  0
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>
+
+<section class="cartao">
+  <header>
+    <h2>Alunos em risco</h2>
+    <p>Média abaixo de 6,0 ou frequência abaixo de 75%.</p>
+  </header>
+
+  @if (emRisco.isLoading()) {
+    <p class="estado" role="status">Carregando…</p>
+  } @else if ((emRisco.value() ?? []).length === 0) {
+    <p class="estado">Ninguém em risco no momento.</p>
+  } @else {
+    <div class="tabela-caixa">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Aluno</th>
+            <th scope="col">Turma</th>
+            <th scope="col">Média</th>
+            <th scope="col">Frequência</th>
+            <th scope="col">Motivo</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (aluno of emRisco.value(); track aluno.matriculaId) {
+            <tr>
+              <td>{{ aluno.aluno }}</td>
+              <td class="secundario">{{ aluno.turma }}</td>
+              <td class="numero">{{ aluno.media === null ? '—' : (aluno.media | number: '1.2-2') }}</td>
+              <td class="numero">
+                {{ aluno.frequenciaPercentual === null ? '—' : (aluno.frequenciaPercentual | number: '1.1-1') + '%' }}
+              </td>
+              <td><span class="etiqueta">{{ aluno.motivo }}</span></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

@@ -1,0 +1,150 @@
+.cabecalho {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 32px;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 22px;
+
+  h1 {
+    margin: 0;
+    font-size: 30px;
+  }
+
+  .subtitulo {
+    margin: 4px 0 0;
+    color: var(--tinta-2);
+    font-size: 14.5px;
+  }
+}
+
+.resumo {
+  display: flex;
+  gap: 22px;
+  margin: 0;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  dt {
+    font-family: var(--fonte-dados);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--tinta-3);
+  }
+
+  dd {
+    margin: 0;
+    font-family: var(--fonte-titulo);
+    font-size: 22px;
+    font-weight: 600;
+  }
+}
+
+.lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.turma {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 28px;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  padding: 16px 20px;
+
+  h2 {
+    margin: 0;
+    font-size: 17px;
+  }
+
+  p {
+    margin: 3px 0 0;
+    font-size: 13.5px;
+    color: var(--tinta-3);
+  }
+}
+
+.ocupacao {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 260px;
+
+  .numeros {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    font-size: 13px;
+    color: var(--tinta-3);
+
+    strong {
+      font-family: var(--fonte-dados);
+      font-size: 17px;
+      color: var(--tinta);
+    }
+  }
+
+  .barra {
+    flex: 1;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--superficie-2);
+    overflow: hidden;
+
+    span {
+      display: block;
+      height: 100%;
+      background: var(--marca);
+    }
+  }
+
+  .percentual {
+    font-family: var(--fonte-dados);
+    font-size: 13px;
+    color: var(--tinta-2);
+    min-width: 42px;
+    text-align: right;
+  }
+}
+
+.estado {
+  color: var(--tinta-2);
+  padding: 32px 0;
+
+  &.erro {
+    color: var(--perigo);
+  }
+
+  button {
+    font: inherit;
+    margin-left: 8px;
+    border: 0;
+    background: none;
+    color: var(--marca);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 640px) {
+  .turma {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ocupacao {
+    min-width: 0;
+  }
+}

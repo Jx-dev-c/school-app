@@ -1,0 +1,53 @@
+<main class="entrada">
+  <form class="cartao" [formGroup]="formulario" (ngSubmit)="entrar()" novalidate>
+    <header>
+      <p class="rotulo">Sistema escolar</p>
+      <h1>Entrar</h1>
+    </header>
+
+    <label for="email">
+      E-mail
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        autocomplete="username"
+        [attr.aria-invalid]="campoInvalido('email')"
+      />
+      @if (campoInvalido('email')) {
+        <span class="erro-campo">
+          {{ formulario.controls.email.hasError('required') ? 'Informe o e-mail' : 'E-mail inválido' }}
+        </span>
+      }
+    </label>
+
+    <label for="senha">
+      Senha
+      <input
+        id="senha"
+        type="password"
+        formControlName="senha"
+        autocomplete="current-password"
+        [attr.aria-invalid]="campoInvalido('senha')"
+      />
+      @if (campoInvalido('senha')) {
+        <span class="erro-campo">
+          {{ formulario.controls.senha.hasError('required') ? 'Informe a senha' : 'A senha tem no mínimo 8 caracteres' }}
+        </span>
+      }
+    </label>
+
+    @if (erro(); as mensagem) {
+      <p class="erro" role="alert">{{ mensagem }}</p>
+    }
+
+    <button type="submit" [disabled]="enviando()">
+      {{ enviando() ? 'Entrando…' : 'Entrar' }}
+    </button>
+
+    <p class="demo">
+      Demonstração: <code>admin&#64;escola.test</code>, <code>professor&#64;escola.test</code> ou
+      <code>aluno&#64;escola.test</code> — senha <code>escola&#64;2026</code>.
+    </p>
+  </form>
+</main>
