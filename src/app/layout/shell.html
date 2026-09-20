@@ -1,0 +1,31 @@
+<header class="topo">
+  <div class="marca">
+    <span class="sigla">SE</span>
+    <div>
+      <strong>Sistema escolar</strong>
+      <span class="ano">Ano letivo 2026</span>
+    </div>
+  </div>
+
+  <nav aria-label="Seções">
+    <a routerLink="/turmas" routerLinkActive="ativo">Turmas</a>
+    @if (podeVerAlunos()) {
+      <a routerLink="/alunos" routerLinkActive="ativo">Alunos</a>
+      <a routerLink="/relatorios" routerLinkActive="ativo">Relatórios</a>
+    }
+  </nav>
+
+  @if (usuario(); as pessoa) {
+    <div class="conta">
+      <div class="identificacao">
+        <strong>{{ pessoa.nome }}</strong>
+        <span class="papel">{{ pessoa.papel }}</span>
+      </div>
+      <button type="button" (click)="sair()">Sair</button>
+    </div>
+  }
+</header>
+
+<main>
+  <router-outlet />
+</main>
