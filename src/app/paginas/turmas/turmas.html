@@ -1,0 +1,74 @@
+<header class="cabecalho">
+  <div>
+    <h1>Turmas</h1>
+    <p class="subtitulo">
+      @switch (papel()) {
+        @case ('Admin') {
+          Todas as turmas do ano letivo.
+        }
+        @case ('Professor') {
+          As turmas sob sua responsabilidade.
+        }
+        @default {
+          As turmas em que você está matriculado.
+        }
+      }
+    </p>
+  </div>
+
+  @if (!turmas.isLoading() && !turmas.error()) {
+    <dl class="resumo">
+      <div>
+        <dt>Turmas</dt>
+        <dd>{{ turmas.value()?.length ?? 0 }}</dd>
+      </div>
+      <div>
+        <dt>Alunos</dt>
+        <dd>{{ totalDeAlunos() }}</dd>
+      </div>
+      <div>
+        <dt>Vagas livres</dt>
+        <dd>{{ totalDeVagas() }}</dd>
+      </div>
+    </dl>
+  }
+</header>
+
+@if (turmas.isLoading()) {
+  <p class="estado" role="status">Carregando turmas…</p>
+} @else if (turmas.error()) {
+  <p class="estado erro" role="alert">
+    Não consegui carregar as turmas.
+    <button type="button" (click)="turmas.reload()">Tentar de novo</button>
+  </p>
+} @else if ((turmas.value() ?? []).length === 0) {
+  <p class="estado">Nenhuma turma por aqui ainda.</p>
+} @else {
+  <ul class="lista">
+    @for (turma of turmas.value(); track turma.id) {
+      <li class="turma">
+        <div class="identificacao">
+          <h2>{{ turma.nome }}</h2>
+          <p>{{ turma.professorNome }} · {{ turma.disciplina }}</p>
+        </div>
+
+        <div class="ocupacao">
+          <div class="numeros">
+            <strong>{{ turma.matriculados }}</strong>
+            <span>de {{ turma.capacidade }} vagas</span>
+          </div>
+          <div
+            class="barra"
+            role="meter"
+            [attr.aria-valuenow]="turma.matriculados"
+            [attr.aria-valuemax]="turma.capacidade"
+            [attr.aria-label]="'Ocupação de ' + turma.nome"
+          >
+            <span [style.width.%]="ocupacao(turma.matriculados, turma.capacidade)"></span>
+          </div>
+          <span class="percentual">{{ ocupacao(turma.matriculados, turma.capacidade) | number: '1.0-0' }}%</span>
+        </div>
+      </li>
+    }
+  </ul>
+}

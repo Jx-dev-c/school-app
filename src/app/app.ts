@@ -1,12 +1,10 @@
-import { Component } from '@angular/core';
-import { UsuarioListaComponent } from './components/usuario-lista/usuario-lista';
-import { UsuarioFormComponent } from './components/usuario-form/usuario-form';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [UsuarioListaComponent, UsuarioFormComponent],
-  templateUrl: './app.html',
-  styleUrls: ['./app.css']
+  imports: [RouterOutlet],
+  template: '<router-outlet />',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent { }
+export class App {}

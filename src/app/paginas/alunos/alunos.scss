@@ -1,0 +1,142 @@
+.cabecalho {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 28px;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  h1 {
+    margin: 0;
+    font-size: 30px;
+  }
+
+  .subtitulo {
+    margin: 4px 0 0;
+    color: var(--tinta-2);
+    font-size: 14.5px;
+  }
+}
+
+.busca {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  .rotulo-visivel {
+    font-family: var(--fonte-dados);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--tinta-3);
+  }
+
+  input {
+    font: inherit;
+    min-width: 240px;
+    padding: 9px 12px;
+    border-radius: 9px;
+    border: 1px solid var(--borda);
+    background: var(--superficie);
+    color: var(--tinta);
+
+    &:focus-visible {
+      outline: 2px solid var(--marca);
+      outline-offset: 1px;
+    }
+  }
+}
+
+.tabela-caixa {
+  overflow-x: auto;
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14.5px;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 11px 18px;
+  border-bottom: 1px solid var(--borda);
+  white-space: nowrap;
+}
+
+tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+thead th {
+  font-family: var(--fonte-dados);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--tinta-3);
+  font-weight: 500;
+}
+
+tbody tr:hover {
+  background: var(--superficie-2);
+}
+
+.email {
+  color: var(--tinta-2);
+}
+
+.data {
+  font-family: var(--fonte-dados);
+  font-variant-numeric: tabular-nums;
+}
+
+.paginacao {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--tinta-2);
+
+  button {
+    font: inherit;
+    padding: 7px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--borda);
+    background: var(--superficie);
+    color: var(--tinta);
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    &:not(:disabled):hover {
+      border-color: var(--tinta-3);
+    }
+  }
+}
+
+.estado {
+  color: var(--tinta-2);
+  padding: 32px 0;
+
+  &.erro {
+    color: var(--perigo);
+  }
+
+  button {
+    font: inherit;
+    margin-left: 8px;
+    border: 0;
+    background: none;
+    color: var(--marca);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}

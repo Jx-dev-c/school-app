@@ -1,0 +1,55 @@
+<header class="cabecalho">
+  <div>
+    <h1>Alunos</h1>
+    <p class="subtitulo">{{ alunos.value()?.total ?? 0 }} matriculados na escola.</p>
+  </div>
+
+  <label class="busca">
+    <span class="rotulo-visivel">Buscar</span>
+    <input type="search" [formControl]="busca" placeholder="Nome ou e-mail" autocomplete="off" />
+  </label>
+</header>
+
+@if (alunos.isLoading()) {
+  <p class="estado" role="status">Carregando alunos…</p>
+} @else if (alunos.error()) {
+  <p class="estado erro" role="alert">
+    Não consegui carregar os alunos.
+    <button type="button" (click)="alunos.reload()">Tentar de novo</button>
+  </p>
+} @else if (alunos.value(); as pagina) {
+  @if (pagina.itens.length === 0) {
+    <p class="estado">Nenhum aluno encontrado para essa busca.</p>
+  } @else {
+    <div class="tabela-caixa">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Nascimento</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (aluno of pagina.itens; track aluno.id) {
+            <tr>
+              <td>{{ aluno.nome }}</td>
+              <td class="email">{{ aluno.email }}</td>
+              <td class="data">{{ aluno.dataNascimento | date: 'dd/MM/yyyy' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <nav class="paginacao" aria-label="Paginação">
+      <button type="button" [disabled]="pagina.pagina === 1" (click)="irPara(pagina.pagina - 1)">
+        Anterior
+      </button>
+      <span>Página {{ pagina.pagina }} de {{ pagina.totalDePaginas }}</span>
+      <button type="button" [disabled]="!pagina.temProxima" (click)="irPara(pagina.pagina + 1)">
+        Próxima
+      </button>
+    </nav>
+  }
+}
