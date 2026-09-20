@@ -1,0 +1,49 @@
+# Sobe o sistema inteiro: banco, API e front atrás de um nginx só.
+# Requer os dois repositórios lado a lado:
+#   ~/projetos/SchoolApi
+#   ~/projetos/school-app   <- rode daqui
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: schooldb
+      POSTGRES_USER: school
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-school123}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U school -d schooldb"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: ../SchoolApi
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Development}
+      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=schooldb;Username=school;Password=${POSTGRES_PASSWORD:-school123}"
+      Jwt__Chave: ${JWT_CHAVE:-chave-de-desenvolvimento-com-mais-de-32-caracteres}
+      # o front chama /api no mesmo domínio, então não há origem cruzada
+      Cors__Origens__0: http://localhost:8080
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 10s
+
+  web:
+    build: .
+    depends_on:
+      # saudável, não só iniciado: o nginx tentava falar com a API enquanto ela
+      # ainda subia e devolvia 502 nos primeiros segundos
+      api:
+        condition: service_healthy
+    ports:
+      - "8080:80"
+
+volumes:
+  postgres-data:
