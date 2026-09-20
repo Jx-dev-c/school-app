@@ -1,0 +1,104 @@
+/* Tokens do tema. Claro por padrão, escuro pelo sistema e pelo atributo. */
+:root {
+  color-scheme: light;
+
+  --plano: #f4f6f8;
+  --superficie: #ffffff;
+  --superficie-2: #eef1f5;
+  --tinta: #111820;
+  --tinta-2: #4a5666;
+  --tinta-3: #6b7787;
+  --borda: #dde3ea;
+
+  --marca: #1f6feb;
+  --perigo: #b4322b;
+  --atencao: #9a6414;
+
+  --sombra: 0 1px 2px rgba(17, 24, 32, 0.05), 0 12px 26px -20px rgba(17, 24, 32, 0.45);
+
+  --fonte-titulo: 'Outfit', 'Source Sans 3', sans-serif;
+  --fonte-texto: 'Source Sans 3', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --fonte-dados: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+
+    --plano: #0f1318;
+    --superficie: #171c23;
+    --superficie-2: #202730;
+    --tinta: #eef2f6;
+    --tinta-2: #b3bdc9;
+    --tinta-3: #8b96a3;
+    --borda: #29313b;
+
+    --marca: #5c9dff;
+    --perigo: #ec7a72;
+    --atencao: #d9a441;
+
+    --sombra: 0 1px 2px rgba(0, 0, 0, 0.5), 0 12px 26px -20px rgba(0, 0, 0, 0.9);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --plano: #0f1318;
+  --superficie: #171c23;
+  --superficie-2: #202730;
+  --tinta: #eef2f6;
+  --tinta-2: #b3bdc9;
+  --tinta-3: #8b96a3;
+  --borda: #29313b;
+
+  --marca: #5c9dff;
+  --perigo: #ec7a72;
+  --atencao: #d9a441;
+
+  --sombra: 0 1px 2px rgba(0, 0, 0, 0.5), 0 12px 26px -20px rgba(0, 0, 0, 0.9);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--plano);
+  color: var(--tinta);
+  font-family: var(--fonte-texto);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--fonte-titulo);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.rotulo {
+  font-family: var(--fonte-dados);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--tinta-3);
+  margin: 0;
+}
+
+:where(button, input, select, a, [tabindex]):focus-visible {
+  outline: 2px solid var(--marca);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
