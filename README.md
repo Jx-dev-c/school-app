@@ -97,5 +97,5 @@ src/app/
   ainda só lê. É o próximo passo natural.
 - **A chamada de presença não existe** em lugar nenhum — a frequência mostrada
   vem dos dados de exemplo.
-- **Sem testes de componente**, só os da API. O front foi verificado no
-  navegador, papel por papel.
+- **Os testes cobrem o núcleo, não as telas**: sessão e interceptor têm 11
+  testes; as páginas foram verificadas no navegador, papel por papel.
